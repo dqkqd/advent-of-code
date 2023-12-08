@@ -1,0 +1,25 @@
+[project]
+name = "aoc"
+version = "2023.0.0"
+dependencies = ["mypy", "pytest", "ruff"]
+
+
+[tool.ruff]
+
+line-length = 99
+indent-width = 4
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ANN101",
+    "D",
+    "EM101",
+    "EM102",
+    "T201",
+    "TRY003",
+    "S101",
+    "PLR2004",
+    "PT009",
+]
+fixable = ["ALL"]
