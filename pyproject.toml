@@ -13,6 +13,7 @@ indent-width = 4
 select = ["ALL"]
 ignore = [
     "ANN101",
+    "ANN102",
     "D",
     "EM101",
     "EM102",
@@ -23,3 +24,6 @@ ignore = [
     "PT009",
 ]
 fixable = ["ALL"]
+
+[tool.mypy]
+ignore_missing_imports = true
