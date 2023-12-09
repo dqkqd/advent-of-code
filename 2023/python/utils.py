@@ -10,7 +10,13 @@ def read_file(file: str) -> Iterator[str]:
 
 
 def read_file_with_filter(file: str) -> Iterator[str]:
-    with (INPUT_FOLDER / file).open() as f:
-        for line in f:
-            if line:
-                yield line
+    for line in read_file(file):
+        if line:
+            yield line
+
+
+def read_file_with_filter_stripped(file: str) -> Iterator[str]:
+    for line in read_file(file):
+        stripped_line = line.strip()
+        if stripped_line:
+            yield stripped_line
