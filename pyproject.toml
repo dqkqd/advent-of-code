@@ -1,7 +1,7 @@
 [project]
 name = "aoc"
 version = "2023.0.0"
-dependencies = ["mypy", "pytest", "ruff"]
+dependencies = ["more_itertools", "mypy", "pytest", "ruff"]
 
 
 [tool.ruff]
