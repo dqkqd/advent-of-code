@@ -4,7 +4,7 @@ import unittest
 from dataclasses import dataclass
 from typing import Self
 
-import utils
+from aoc import utils
 
 
 @dataclass(kw_only=True)
@@ -65,7 +65,7 @@ def solve_case_1() -> int:
         return game_set.possible(r=12, g=13, b=14)
 
     answer = 0
-    for line in utils.read_file_with_filter("day02.txt"):
+    for line in utils.read_file_with_filter(2023, "day02.txt"):
         game = Game.from_str(line)
         possible_game = all(map(possible, game.game_sets))
         answer += game.game_id if possible_game else 0
@@ -74,17 +74,17 @@ def solve_case_1() -> int:
 
 def solve_case_2() -> int:
     answer = 0
-    for line in utils.read_file_with_filter("day02.txt"):
+    for line in utils.read_file_with_filter(2023, "day02.txt"):
         answer += Game.from_str(line).power()
     return answer
 
 
-class TestDay02(unittest.TestCase):
-    def test_case_1(self) -> None:
-        self.assertEqual(solve_case_1(), 2317)
+def test_case_1() -> None:
+    assert solve_case_1() == 2317
 
-    def test_case_2(self) -> None:
-        self.assertEqual(solve_case_2(), 74804)
+
+def test_case_2() -> None:
+    assert solve_case_2() == 74804
 
 
 if __name__ == "__main__":

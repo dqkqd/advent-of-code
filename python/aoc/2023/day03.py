@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from functools import cached_property
 from typing import Iterator, Self
 
-import utils
+from aoc import utils
 
 
 @dataclass(kw_only=True)
@@ -161,13 +161,13 @@ class Engine:
 
 
 def solve_case_1() -> int:
-    engine = Engine.from_lines(utils.read_file_with_filter_stripped("day03.txt"))
+    engine = Engine.from_lines(utils.read_file_with_filter_stripped(2023, "day03.txt"))
     engine.fill_state()
     return sum(engine.collect().values())
 
 
 def solve_case_2() -> int:
-    engine = Engine.from_lines(utils.read_file_with_filter_stripped("day03.txt"))
+    engine = Engine.from_lines(utils.read_file_with_filter_stripped(2023, "day03.txt"))
     engine.fill_state()
     collection = engine.collect()
     total = 0
@@ -179,12 +179,12 @@ def solve_case_2() -> int:
     return total
 
 
-class TestDay03(unittest.TestCase):
-    def test_case_1(self) -> None:
-        self.assertEqual(solve_case_1(), 549908)
+def test_case_1() -> None:
+    assert solve_case_1() == 549908
 
-    def test_case_2(self) -> None:
-        self.assertEqual(solve_case_2(), 81166799)
+
+def test_case_2() -> None:
+    assert solve_case_2() == 81166799
 
 
 if __name__ == "__main__":

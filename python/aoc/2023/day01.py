@@ -1,16 +1,15 @@
 from __future__ import annotations
 
-import unittest
 from typing import Callable
 
-import utils
+from aoc import utils
 
 NUMBERS = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
 
 def solve_case_1() -> int:
     total = 0
-    for line in utils.read_file_with_filter("day01.txt"):
+    for line in utils.read_file_with_filter(2023, "day01.txt"):
         digits = list(map(int, filter(str.isdigit, line)))
         total += digits[0] * 10 + digits[-1]
     return total
@@ -37,7 +36,7 @@ def get_num_from(line: str) -> Callable[[int], int | None]:
 
 def solve_case_2() -> int:
     total = 0
-    for line in utils.read_file_with_filter("day01.txt"):
+    for line in utils.read_file_with_filter(2023, "day01.txt"):
         get_num_at = get_num_from(line)
         mapped_values = map(get_num_at, range(len(line)))
         digits = [x for x in mapped_values if x is not None]
@@ -45,13 +44,9 @@ def solve_case_2() -> int:
     return total
 
 
-class TestDay01(unittest.TestCase):
-    def test_case_1(self) -> None:
-        self.assertEqual(solve_case_1(), 54338)
-
-    def test_case_2(self) -> None:
-        self.assertEqual(solve_case_2(), 53389)
+def test_case_1() -> None:
+    assert solve_case_1() == 54338
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_case_2() -> None:
+    assert solve_case_2() == 53389

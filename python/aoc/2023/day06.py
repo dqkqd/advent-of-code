@@ -1,7 +1,6 @@
 import math
-import unittest
 
-import utils
+from aoc import utils
 
 
 def solve(total_time: int, distance: int) -> int:
@@ -15,7 +14,7 @@ def solve(total_time: int, distance: int) -> int:
 
 
 def solve_case_1() -> int:
-    lines = utils.read_file_with_filter_stripped("day06.txt")
+    lines = utils.read_file_with_filter_stripped(2023, "day06.txt")
     times = map(
         int,
         (v for v in next(lines).split(":")[-1].split(" ") if len(v) > 0),
@@ -29,19 +28,15 @@ def solve_case_1() -> int:
 
 
 def solve_case_2() -> int:
-    lines = utils.read_file_with_filter_stripped("day06.txt")
+    lines = utils.read_file_with_filter_stripped(2023, "day06.txt")
     total_time = int(next(lines).split(":")[-1].replace(" ", ""))
     distance = int(next(lines).split(":")[-1].replace(" ", ""))
     return solve(total_time, distance)
 
 
-class TestDay06(unittest.TestCase):
-    def test_case_1(self) -> None:
-        self.assertEqual(solve_case_1(), 4811940)
-
-    def test_case_2(self) -> None:
-        self.assertEqual(solve_case_2(), 30077773)
+def test_case_1() -> None:
+    assert solve_case_1() == 4811940
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_case_2() -> None:
+    assert solve_case_2() == 30077773

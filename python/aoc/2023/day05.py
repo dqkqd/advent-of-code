@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 import itertools
-import unittest
 from dataclasses import dataclass
 from functools import cached_property
 from typing import Iterator, Self
 
 import more_itertools
-import utils
+
+from aoc import utils
 
 
 @dataclass(kw_only=True)
@@ -135,14 +135,14 @@ class Almanac:
 
 
 def solve_case_1() -> int:
-    almanac = Almanac.from_iter(utils.read_file("day05.txt"))
+    almanac = Almanac.from_iter(utils.read_file(2023, "day05.txt"))
     return min(
         almanac.best_location(Seeds(start=seed, end=seed)) for seed in almanac.seeds
     )
 
 
 def solve_case_2() -> int:
-    almanac = Almanac.from_iter(utils.read_file("day05.txt"))
+    almanac = Almanac.from_iter(utils.read_file(2023, "day05.txt"))
     return min(
         almanac.best_location(Seeds(start=start, end=start + diff - 1))
         for start, diff in zip(
@@ -152,72 +152,48 @@ def solve_case_2() -> int:
     )
 
 
-class TestDay05(unittest.TestCase):
-    def test_create_gap(self) -> None:
-        map_item1 = MapItem(src=10, dst=20, length=7)
-        map_item2 = MapItem(src=20, dst=30, length=5)
-        map_item3 = map_item1.create_gap_between_items(map_item2)
-        self.assertEqual(map_item3, MapItem(src=17, dst=17, length=3))
-
-    def test_map_item_location(self) -> None:
-        map_item = MapItem(src=50, dst=52, length=48)
-        self.assertIsNone(map_item.location(Seeds(start=0, end=49)))
-        self.assertEqual(
-            map_item.location(Seeds(start=0, end=50)),
-            Seeds(start=52, end=52),
-        )
-        self.assertEqual(
-            map_item.location(Seeds(start=0, end=51)),
-            Seeds(start=52, end=53),
-        )
-        self.assertEqual(
-            map_item.location(Seeds(start=97, end=99)),
-            Seeds(start=99, end=99),
-        )
-        self.assertIsNone(map_item.location(Seeds(start=98, end=99)))
-
-    def test_map_location(self) -> None:
-        test_data = [
-            "test",
-            "30 20 8",
-            "20 10 5",
-        ]
-        maps = Map.from_iter(iter(test_data))
-        self.assertEqual(
-            list(maps.location(Seeds(start=10, end=14))),
-            [Seeds(start=20, end=24)],
-        )
-        self.assertEqual(
-            list(maps.location(Seeds(start=0, end=9))),
-            [Seeds(start=0, end=9)],
-        )
-        self.assertEqual(
-            list(maps.location(Seeds(start=0, end=10))),
-            [Seeds(start=20, end=20), Seeds(start=0, end=9)],
-        )
-        self.assertEqual(
-            list(maps.location(Seeds(start=15, end=19))),
-            [Seeds(start=15, end=19)],
-        )
-        self.assertEqual(
-            list(maps.location(Seeds(start=20, end=27))),
-            [Seeds(start=30, end=37)],
-        )
-        self.assertEqual(
-            list(maps.location(Seeds(start=28, end=40))),
-            [Seeds(start=28, end=40)],
-        )
-        self.assertEqual(
-            list(maps.location(Seeds(start=25, end=40))),
-            [Seeds(start=35, end=37), Seeds(start=28, end=40)],
-        )
-
-    def test_case_1(self) -> None:
-        self.assertEqual(solve_case_1(), 322500873)
-
-    def test_case_2(self) -> None:
-        self.assertEqual(solve_case_2(), 108956227)
+def test_create_gap() -> None:
+    map_item1 = MapItem(src=10, dst=20, length=7)
+    map_item2 = MapItem(src=20, dst=30, length=5)
+    map_item3 = map_item1.create_gap_between_items(map_item2)
+    assert map_item3 == MapItem(src=17, dst=17, length=3)
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_map_item_location() -> None:
+    map_item = MapItem(src=50, dst=52, length=48)
+    assert map_item.location(Seeds(start=0, end=49)) is None
+    assert map_item.location(Seeds(start=0, end=50)) == Seeds(start=52, end=52)
+    assert map_item.location(Seeds(start=0, end=51)) == Seeds(start=52, end=53)
+    assert map_item.location(Seeds(start=97, end=99)) == Seeds(start=99, end=99)
+    assert map_item.location(Seeds(start=98, end=99)) is None
+
+
+def test_map_location() -> None:
+    test_data = [
+        "test",
+        "30 20 8",
+        "20 10 5",
+    ]
+    maps = Map.from_iter(iter(test_data))
+    assert list(maps.location(Seeds(start=10, end=14))) == [Seeds(start=20, end=24)]
+
+    assert list(maps.location(Seeds(start=0, end=9))) == [Seeds(start=0, end=9)]
+    assert list(maps.location(Seeds(start=0, end=10))) == [
+        Seeds(start=20, end=20),
+        Seeds(start=0, end=9),
+    ]
+    assert list(maps.location(Seeds(start=15, end=19))) == [Seeds(start=15, end=19)]
+    assert list(maps.location(Seeds(start=20, end=27))) == [Seeds(start=30, end=37)]
+    assert list(maps.location(Seeds(start=28, end=40))) == [Seeds(start=28, end=40)]
+    assert list(maps.location(Seeds(start=25, end=40))) == [
+        Seeds(start=35, end=37),
+        Seeds(start=28, end=40),
+    ]
+
+
+def test_case_1() -> None:
+    assert solve_case_1() == 322500873
+
+
+def test_case_2() -> None:
+    assert solve_case_2() == 108956227

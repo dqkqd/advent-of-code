@@ -1,12 +1,11 @@
 from __future__ import annotations
 
 import enum
-import unittest
 from collections import Counter
 from dataclasses import dataclass
 from typing import Self
 
-import utils
+from aoc import utils
 
 CARDS = [
     "A",
@@ -195,24 +194,20 @@ class Hand2:
 
 
 def solve_case_1() -> int:
-    hands = map(Hand.from_str, utils.read_file_with_filter_stripped("day07.txt"))
+    hands = map(Hand.from_str, utils.read_file_with_filter_stripped(2023, "day07.txt"))
     sorted_hands = sorted(hands)
     return sum(i * v.bid for i, v in enumerate(sorted_hands, start=1))
 
 
 def solve_case_2() -> int:
-    hands = map(Hand2.from_str, utils.read_file_with_filter_stripped("day07.txt"))
+    hands = map(Hand2.from_str, utils.read_file_with_filter_stripped(2023, "day07.txt"))
     sorted_hands = sorted(hands)
     return sum(i * v.bid for i, v in enumerate(sorted_hands, start=1))
 
 
-class TestDay06(unittest.TestCase):
-    def test_case_1(self) -> None:
-        self.assertEqual(solve_case_1(), 246912307)
-
-    def test_case_2(self) -> None:
-        self.assertEqual(solve_case_2(), 246894760)
+def test_case_1() -> None:
+    assert solve_case_1() == 246912307
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_case_2() -> None:
+    assert solve_case_2() == 246894760
