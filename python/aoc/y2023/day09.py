@@ -16,7 +16,7 @@ class HistorySequence:
     def end(self) -> bool:
         return all(x == 0 for x in self.data)
 
-    def next_sequence(self) -> Self | None:
+    def next_sequence(self) -> HistorySequence | None:
         if self.end:
             return None
         return HistorySequence(
@@ -24,12 +24,13 @@ class HistorySequence:
         )
 
     def next_sequences(self: HistorySequence) -> Iterator[HistorySequence]:
-        seq = self
+        seq: HistorySequence | None = self
         while True:
-            yield seq
-            seq = seq.next_sequence()
             if seq is None:
                 break
+
+            yield seq
+            seq = seq.next_sequence()
 
 
 @dataclass

@@ -24,7 +24,7 @@ class Pipe(enum.StrEnum):
     Start = "S"
 
     @classmethod
-    def from_char(cls: type[Self], c: str) -> Self:
+    def from_char(cls: type[Self], c: str) -> Pipe:
         return next(p for p in Pipe if p.value == c)
 
     def get_middle_horizontal(self, other: Self | None) -> Literal[Pipe.LR] | None:
@@ -56,16 +56,16 @@ class Point:
     x: int
     y: int
 
-    def left(self) -> Self:
+    def left(self) -> Point:
         return Point(x=self.x, y=self.y - 1)
 
-    def right(self) -> Self:
+    def right(self) -> Point:
         return Point(x=self.x, y=self.y + 1)
 
-    def up(self) -> Self:
+    def up(self) -> Point:
         return Point(x=self.x - 1, y=self.y)
 
-    def down(self) -> Self:
+    def down(self) -> Point:
         return Point(x=self.x + 1, y=self.y)
 
 

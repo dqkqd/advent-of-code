@@ -14,7 +14,7 @@ class AreaType(enum.StrEnum):
     GALAXY = "#"
 
     @classmethod
-    def from_char(cls: type[Self], c: str) -> Self:
+    def from_char(cls: type[Self], c: str) -> AreaType:
         for area in AreaType:
             if area == c:
                 return area
